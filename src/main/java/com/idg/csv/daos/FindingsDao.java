@@ -66,4 +66,19 @@ public class FindingsDao {
         criteria.add(Restrictions.like("url", "%" + type + "%"));
         return criteria.list();
     }
+
+    @Transactional
+    public List<FinderEntity> findByTypeAndError(String type, Integer errorType) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(FinderEntity.class);
+        criteria.add(Restrictions.like("url", "%" + type + "%"));
+        criteria.add(Restrictions.eq("responseCode", errorType));
+        return criteria.list();
+    }
+
+    @Transactional
+    public List<FinderEntity> findByError(Integer errorType) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(FinderEntity.class);
+        criteria.add(Restrictions.eq("responseCode", errorType));
+        return criteria.list();
+    }
 }
